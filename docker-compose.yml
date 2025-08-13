@@ -10,5 +10,30 @@ services:
       - "5432:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./spring-demo
+      dockerfile: Dockerfile
+    container_name: activities-backend
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/activities
+      DB_USER: app
+      DB_PASS: app
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: activities-frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+
 volumes:
   pg_data:

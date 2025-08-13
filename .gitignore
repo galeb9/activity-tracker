@@ -1,0 +1,48 @@
+# --- OS cruft ---
+.DS_Store
+Thumbs.db
+
+# --- IDEs ---
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.code-workspace
+
+# --- Node / React (covers any subfolder, incl. ./frontend) ---
+node_modules/
+dist/
+.vite/
+coverage/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+# env files (don’t commit secrets)
+.env
+.env.*
+# optional: if you keep envs only in frontend
+frontend/.env
+frontend/.env.*
+
+# --- Java / Maven (covers ./spring-demo) ---
+target/
+*.class
+hs_err_pid*
+replay_pid*
+# Spring Boot temp / outputs
+*.out
+.spring-*
+# Optional local-only props
+application-local.*
+application-*.local.properties
+
+# --- Docker / local overrides ---
+docker-compose.override.yml
+*.env.docker
+
+# --- Misc ---
+*.swp
+*.orig

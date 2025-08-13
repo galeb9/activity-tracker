@@ -1,0 +1,16 @@
+# Maven/IDE
+target/
+**/*.iml
+.idea/
+.gradle/
+.mvn/wrapper/maven-wrapper.jar
+.vscode/
+
+# VCS & noise
+.git/
+.gitignore
+*.log
+.DS_Store
+
+# Node stuff (in case someone drops UI files here)
+node_modules/
