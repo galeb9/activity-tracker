@@ -1,4 +1,15 @@
+C:\Users\Matej\IdeaProjects\activity-demo\spring-demo\src\main\java\com\example\springdemo\config\CorsConfig.java
 C:\Users\Matej\IdeaProjects\activity-demo\spring-demo\src\main\java\com\example\springdemo\controller\ActivityController.java
+C:\Users\Matej\IdeaProjects\activity-demo\spring-demo\src\main\java\com\example\springdemo\controller\CategoryController.java
+C:\Users\Matej\IdeaProjects\activity-demo\spring-demo\src\main\java\com\example\springdemo\dto\ActivityCreateDto.java
+C:\Users\Matej\IdeaProjects\activity-demo\spring-demo\src\main\java\com\example\springdemo\dto\ActivityDto.java
+C:\Users\Matej\IdeaProjects\activity-demo\spring-demo\src\main\java\com\example\springdemo\dto\ActivityUpdateDto.java
+C:\Users\Matej\IdeaProjects\activity-demo\spring-demo\src\main\java\com\example\springdemo\dto\CategoryCreateDto.java
+C:\Users\Matej\IdeaProjects\activity-demo\spring-demo\src\main\java\com\example\springdemo\dto\CategoryDto.java
 C:\Users\Matej\IdeaProjects\activity-demo\spring-demo\src\main\java\com\example\springdemo\model\Activity.java
+C:\Users\Matej\IdeaProjects\activity-demo\spring-demo\src\main\java\com\example\springdemo\model\Category.java
 C:\Users\Matej\IdeaProjects\activity-demo\spring-demo\src\main\java\com\example\springdemo\repo\ActivityRepository.java
+C:\Users\Matej\IdeaProjects\activity-demo\spring-demo\src\main\java\com\example\springdemo\repo\CategoryRepository.java
+C:\Users\Matej\IdeaProjects\activity-demo\spring-demo\src\main\java\com\example\springdemo\service\ActivityService.java
+C:\Users\Matej\IdeaProjects\activity-demo\spring-demo\src\main\java\com\example\springdemo\service\CategoryService.java
 C:\Users\Matej\IdeaProjects\activity-demo\spring-demo\src\main\java\com\example\springdemo\SpringDemoApplication.java

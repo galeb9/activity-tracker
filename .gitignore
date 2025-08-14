@@ -40,7 +40,7 @@ application-local.*
 application-*.local.properties
 
 # --- Docker / local overrides ---
-docker-compose.override.yml
+docker-compose.override.yml.example
 *.env.docker
 
 # --- Misc ---

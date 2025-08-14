@@ -1,2 +1,12 @@
-com\example\springdemo\SpringDemoApplication.class
-com\example\springdemo\repo\ActivityRepository.class
+com\example\springdemo\model\Category.class
+com\example\springdemo\service\ActivityService.class
+com\example\springdemo\config\CorsConfig.class
+com\example\springdemo\dto\CategoryCreateDto.class
+com\example\springdemo\service\CategoryService.class
+com\example\springdemo\repo\CategoryRepository.class
+com\example\springdemo\dto\ActivityCreateDto.class
+com\example\springdemo\dto\ActivityUpdateDto.class
+com\example\springdemo\dto\ActivityDto.class
+com\example\springdemo\config\CorsConfig$1.class
+com\example\springdemo\controller\CategoryController.class
+com\example\springdemo\dto\CategoryDto.class
