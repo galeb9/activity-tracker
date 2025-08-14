@@ -1,24 +1,27 @@
-import React from "react"
-import { Link, Route, Routes, Navigate } from "react-router-dom"
-import ActivitiesPage from "./pages/ActivitiesPage"
-import CategoriesPage from "./pages/CategoriesPage"
+import { Routes, Route, Navigate } from "react-router-dom";
+import Layout from "./layout/Layout";
+import ActivitiesListPage from "./features/activities/pages/ActivitiesListPage";
+import ActivityUpsertPage from "./features/activities/pages/ActivityUpsertPage";
+import CategoriesListPage from "./features/categories/pages/CategoriesListPage";
+import CategoryUpsertPage from "./features/categories/pages/CategoryUpsertPage";
 
 export default function App() {
     return (
-        <main style={{ padding: 24, display: "grid", gap: 16 }}>
-            <h1>Activity Tracker</h1>
-
-            <nav style={{ display: "flex", gap: 12 }}>
-                <Link to="/activities">Activities</Link>
-                <Link to="/categories">Categories</Link>
-            </nav>
-
-            <Routes>
+        <Routes>
+            <Route element={<Layout />}>
                 <Route path="/" element={<Navigate to="/activities" replace />} />
-                <Route path="/activities" element={<ActivitiesPage />} />
-                <Route path="/categories" element={<CategoriesPage />} />
-                <Route path="*" element={<p>Not Found</p>} />
-            </Routes>
-        </main>
-    )
+                <Route path="activities">
+                    <Route index element={<ActivitiesListPage />} />
+                    <Route path="new" element={<ActivityUpsertPage />} />
+                    <Route path=":id" element={<ActivityUpsertPage />} />
+                </Route>
+                <Route path="categories">
+                    <Route index element={<CategoriesListPage />} />
+                    <Route path="new" element={<CategoryUpsertPage />} />
+                    <Route path=":id" element={<CategoryUpsertPage />} />
+                </Route>
+
+            </Route>
+        </Routes>
+    );
 }

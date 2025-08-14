@@ -1,27 +1,20 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import { getCategories, createCategory } from "../../api/categoriesApi"
-
-export const fetchCategories = createAsyncThunk("categories/fetchAll", async () => {
-    const { data } = await getCategories()
-    console.log(data)
-    return data
-})
-
-export const addCategory = createAsyncThunk("categories/add", async (payload) => {
-    const { data } = await createCategory(payload)
-    return data
-})
+import { createSlice } from "@reduxjs/toolkit";
 
 const categoriesSlice = createSlice({
     name: "categories",
-    initialState: { items: [], status: "idle", error: null },
-    reducers: {},
-    extraReducers: (b) => {
-        b.addCase(fetchCategories.pending, (s) => { s.status = "loading"; s.error = null })
-            .addCase(fetchCategories.fulfilled, (s, a) => { s.status = "succeeded"; s.items = a.payload })
-            .addCase(fetchCategories.rejected, (s, a) => { s.status = "failed"; s.error = a.error?.message || "Failed to load" })
-            .addCase(addCategory.fulfilled, (s, a) => { s.items.push(a.payload) })
-    }
-})
+    initialState: { items: [], loading: false, error: null },
+    reducers: {
+        setLoading: (s) => { s.loading = true; s.error = null; },
+        setError: (s, a) => { s.loading = false; s.error = a.payload || "Error"; },
+        setAll: (s, a) => { s.loading = false; s.items = a.payload; },
+        addOne: (s, a) => { s.items.push(a.payload); },
+        updateOne: (s, a) => {
+            const i = s.items.findIndex(x => x.id === a.payload.id);
+            if (i !== -1) s.items[i] = a.payload;
+        },
+        removeOne: (s, a) => { s.items = s.items.filter(x => x.id !== a.payload); },
+    },
+});
 
-export default categoriesSlice.reducer
+export const { setLoading, setError, setAll, addOne, updateOne, removeOne } = categoriesSlice.actions;
+export default categoriesSlice.reducer;
