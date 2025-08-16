@@ -23,8 +23,11 @@ import {useTheme} from '@mui/material/styles';
 
 const LINKS = [
     { name: 'Activities', link: '/activities', icon: <MailIcon/> },
-    { name: 'Categories', link: '/categories', icon: <MailIcon/> },
     { name: "Add Activity", link: "/activities/new", icon: <MailIcon /> },
+    { name: "Activity Filters", link: "/activities/filters", icon: <MailIcon /> },
+    { name: "Activity by day", link: "/activities/day", icon: <MailIcon /> },
+
+    { name: 'Categories', link: '/categories', icon: <MailIcon/> },
     { name: "Add Category", link: "/categories/new", icon: <MailIcon /> },
 ];
 

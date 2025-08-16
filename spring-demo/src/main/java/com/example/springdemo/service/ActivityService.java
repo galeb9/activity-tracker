@@ -3,11 +3,17 @@ package com.example.springdemo.service;
 import com.example.springdemo.dto.*;
 import com.example.springdemo.model.Activity;
 import com.example.springdemo.repo.ActivityRepository;
+import com.example.springdemo.repo.ActivitySpecifications;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -17,12 +23,33 @@ public class ActivityService {
     private final CategoryService categories;
 
     public ActivityService(ActivityRepository repo, CategoryService categories) {
-        this.repo = repo; this.categories = categories;
+        this.repo = repo;
+        this.categories = categories;
     }
 
-    public List<ActivityDto> all() { return repo.findAll().stream().map(this::toDto).toList(); }
+    public List<ActivityDto> all() {
+        return repo.findAll().stream().map(this::toDto).toList();
+    }
 
-    public ActivityDto byId(Long id) { return toDto(getOr404(id)); }
+    @Transactional(readOnly = true)
+    public Page<ActivityDto> search(
+            String q, Long categoryId, LocalDate from, LocalDate to,
+            Integer minMinutes, Integer maxMinutes,
+            Pageable pageable
+    ) {
+        var spec = ActivitySpecifications.withFilters(q, categoryId, from, to, minMinutes, maxMinutes);
+        var p = pageable;
+        if (p == null || p.getSort().isUnsorted()) {
+            p = PageRequest.of(p == null ? 0 : p.getPageNumber(),
+                    p == null ? 20 : p.getPageSize(),
+                    Sort.by(Sort.Direction.DESC, "date").and(Sort.by("id").descending()));
+        }
+        return repo.findAll(spec, p).map(this::toDto);
+    }
+
+    public ActivityDto byId(Long id) {
+        return toDto(getOr404(id));
+    }
 
     public ActivityDto create(ActivityCreateDto req) {
         var cat = categories.getOr404(req.categoryId());
@@ -41,7 +68,8 @@ public class ActivityService {
     }
 
     public void delete(Long id) {
-        if (!repo.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Activity %d not found".formatted(id));
+        if (!repo.existsById(id))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Activity %d not found".formatted(id));
         repo.deleteById(id);
     }
 

@@ -29,6 +29,7 @@ frontend/.env.*
 
 # --- Java / Maven (covers ./spring-demo) ---
 target/
+spring-demo/target/
 *.class
 hs_err_pid*
 replay_pid*
