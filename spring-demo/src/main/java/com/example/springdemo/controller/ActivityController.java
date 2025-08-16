@@ -2,18 +2,13 @@ package com.example.springdemo.controller;
 
 import com.example.springdemo.dto.*;
 import com.example.springdemo.service.ActivityService;
-import jakarta.validation.Valid;
+import org.springframework.data.domain.*;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/activities")
@@ -25,8 +20,13 @@ public class ActivityController {
     }
 
     @GetMapping
-    public List<ActivityDto> getAll() {
-        return svc.all();
+    public Page<ActivityDto> getAll(@PageableDefault(size = 20, sort = {"startAt", "id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+        return svc.search(null, null, null, null, null, null, pageable);
+    }
+
+    @GetMapping("/{id}")
+    public ActivityDto getOne(@PathVariable Long id) {
+        return svc.byId(id);
     }
 
     @GetMapping("/search")
@@ -37,21 +37,14 @@ public class ActivityController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
             @RequestParam(required = false) Integer minMinutes,
             @RequestParam(required = false) Integer maxMinutes,
-            @PageableDefault(size = 20, sort = {"date", "id"}, direction = Sort.Direction.DESC)
-            Pageable pageable
+            @PageableDefault(size = 20) Pageable pageable
     ) {
         return svc.search(q, categoryId, from, to, minMinutes, maxMinutes, pageable);
     }
 
-
-    @GetMapping("/{id}")
-    public ActivityDto getOne(@PathVariable Long id) {
-        return svc.byId(id);
-    }
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ActivityDto create(@Valid @RequestBody ActivityCreateDto req) {
+    public ActivityDto create(@RequestBody ActivityCreateDto req) {
         return svc.create(req);
     }
 

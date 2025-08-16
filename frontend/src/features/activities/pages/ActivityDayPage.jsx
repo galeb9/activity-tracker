@@ -75,7 +75,7 @@ export default function ActivityDayPage() {
                         to: d,
                         page: 0,
                         size: 100,
-                        sort: ["date,desc", "id,desc"],
+                        sort: ["startAt,asc", "id,desc"],
                     },
                     paramsSerializer: { indexes: null },
                 });
@@ -98,7 +98,14 @@ export default function ActivityDayPage() {
         }
     };
 
-    const sorted = useMemo(() => [...items].sort((a, b) => Number(b.id) - Number(a.id)), [items]);
+    const sorted = useMemo(() => {
+        return [...items].sort((a, b) => {
+            const ta = a.startAt ? dayjs(a.startAt).valueOf() : Number.POSITIVE_INFINITY;
+            const tb = b.startAt ? dayjs(b.startAt).valueOf() : Number.POSITIVE_INFINITY;
+            if (ta !== tb) return ta - tb;
+            return Number(b.id) - Number(a.id);
+        });
+    }, [items]);
 
     const totalMinutes = useMemo(
         () => sorted.reduce((sum, a) => sum + (Number(a.durationMinutes) || 0), 0),
@@ -175,6 +182,9 @@ export default function ActivityDayPage() {
                             <StepLabel>
                                 <Stack direction="row" alignItems="center" gap={1} flexWrap="wrap">
                                     <Typography fontWeight={600}>{a.name}</Typography>
+                                    {a.startAt && (
+                                        <Chip size="small" variant="outlined" label={dayjs(a.startAt).format("HH:mm")} />
+                                    )}
                                     <Chip size="small" label={`${a.durationMinutes} min`} />
                                     {a.categoryName && <Chip size="small" variant="outlined" label={a.categoryName} />}
                                 </Stack>

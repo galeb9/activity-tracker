@@ -1,11 +1,11 @@
 package com.example.springdemo.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record ActivityUpdateDto(
         String name,
         String description,
         Long categoryId,
-        LocalDate date,
+        LocalDateTime startAt,
         Integer durationMinutes
 ) {}

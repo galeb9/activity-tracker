@@ -7,9 +7,9 @@ import ActivityForm from "../components/ActivityForm";
 import { Box, CircularProgress, Alert } from "@mui/material";
 
 export default function ActivityUpsertPage() {
-    const { id } = useParams();                 // "/activities/new" → undefined (create), "/activities/:id" → edit
+    const { id } = useParams();
     const isEdit = Boolean(id);
-    const activityId = isEdit ? Number(id) : null; // if your IDs are strings, remove Number()
+    const activityId = isEdit ? Number(id) : null;
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -19,13 +19,11 @@ export default function ActivityUpsertPage() {
     const [localError, setLocalError] = useState(null);
     const [fetchedActivity, setFetchedActivity] = useState(null);
 
-    // Prefer store
     const fromStore = useMemo(
         () => (isEdit ? items.find((a) => a.id === activityId) : null),
         [items, isEdit, activityId]
     );
 
-    // If editing and not in store, fetch by id (or fallback to fetch all)
     useEffect(() => {
         if (!isEdit) return;
         let ignore = false;
@@ -63,7 +61,7 @@ export default function ActivityUpsertPage() {
                 const { data } = await axiosClient.post("/activities", values);
                 dispatch(addOne(data));
             }
-            navigate("/activities");
+            navigate("/activities/day");
         } catch (e) {
             const msg = e.response?.data?.message || e.message;
             setLocalError(msg);
@@ -73,7 +71,6 @@ export default function ActivityUpsertPage() {
         }
     };
 
-    // Loading/error only matter when editing and data isn't available yet
     if (isEdit && loading && !fromStore && !fetchedActivity) {
         return (
             <Box p={3} display="flex" justifyContent="center">
@@ -106,7 +103,7 @@ export default function ActivityUpsertPage() {
                     ? {
                         name: initial.name,
                         description: initial.description,
-                        date: initial.date,
+                        startAt: initial.startAt,         // <<< pass startAt (not date)
                         durationMinutes: initial.durationMinutes,
                         categoryId: initial.categoryId,
                     }
