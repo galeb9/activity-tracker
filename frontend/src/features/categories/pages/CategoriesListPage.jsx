@@ -1,4 +1,3 @@
-// src/features/categories/pages/CategoriesListPage.jsx
 import React, { useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";

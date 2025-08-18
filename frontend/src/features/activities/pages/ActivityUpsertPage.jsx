@@ -61,7 +61,7 @@ export default function ActivityUpsertPage() {
                 const { data } = await axiosClient.post("/activities", values);
                 dispatch(addOne(data));
             }
-            navigate("/activities/day");
+            navigate("/activities");
         } catch (e) {
             const msg = e.response?.data?.message || e.message;
             setLocalError(msg);
@@ -103,7 +103,7 @@ export default function ActivityUpsertPage() {
                     ? {
                         name: initial.name,
                         description: initial.description,
-                        startAt: initial.startAt,         // <<< pass startAt (not date)
+                        startAt: initial.startAt,
                         durationMinutes: initial.durationMinutes,
                         categoryId: initial.categoryId,
                     }

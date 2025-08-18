@@ -13,16 +13,16 @@ const CategorySchema = z.object({
 });
 
 export default function CategoryForm({
-                                         mode,               // "create" | "edit"
-                                         initialValues,      // { name?: string }
-                                         onSubmit,           // async (values) => void
-                                         submitting = false,
-                                         error = null,
-                                     }) {
+ mode,
+ initialValues,
+ onSubmit,
+ submitting = false,
+ error = null,
+}) {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(CategorySchema),
         defaultValues: { name: initialValues?.name || "" },
-        values: { name: initialValues?.name || "" }, // keep in sync when initialValues change
+        values: { name: initialValues?.name || "" },
     });
 
     return (

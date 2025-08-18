@@ -38,7 +38,7 @@ const activitiesSlice = createSlice({
             if (query) s.lastQuery = query;
         },
 
-        addOne: (s, a) => { s.items.unshift(a.payload); s.totalElements += 1; }, // newest first
+        addOne: (s, a) => { s.items.unshift(a.payload); s.totalElements += 1; },
         updateOne: (s, a) => {
             const i = s.items.findIndex(x => x.id === a.payload.id);
             if (i !== -1) s.items[i] = a.payload;

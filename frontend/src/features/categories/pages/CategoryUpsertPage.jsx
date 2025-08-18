@@ -73,7 +73,6 @@ export default function CategoryUpsertPage() {
         }
     };
 
-    // Loading / error states only matter when editing and we don't yet have data
     if (isEdit && loading && !fromStore && !fetchedCategory) {
         return (
             <Box p={3} display="flex" justifyContent="center">
