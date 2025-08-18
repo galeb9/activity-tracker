@@ -17,16 +17,18 @@ import {
 } from '@mui/material';
 
 import MenuIcon from '@mui/icons-material/Menu';
-import MailIcon from '@mui/icons-material/Mail';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import QueueIcon from '@mui/icons-material/Queue';
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
 import {useTheme} from '@mui/material/styles';
 
 const LINKS = [
-    { name: 'Activities', link: '/activities', icon: <MailIcon/> },
-    { name: "Add Activity", link: "/activities/new", icon: <MailIcon /> },
-
-    { name: 'Categories', link: '/categories', icon: <MailIcon/> },
-    { name: "Add Category", link: "/categories/new", icon: <MailIcon /> },
+    { name: 'Activities', link: '/activities', icon: <FilterListIcon/> },
+    { name: "Add Activity", link: "/activities/new", icon: <QueueIcon /> },
+    { name: 'Categories', link: '/categories', icon: <FormatListBulletedIcon/> },
+    { name: "Add Category", link: "/categories/new", icon: <PlaylistAddIcon /> },
 ];
 
 export default function Navigation() {

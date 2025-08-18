@@ -1,6 +1,9 @@
-cd spring-demo
-./mvnw clean package -DskipTests
+# 1) Build fresh
 
-cd frontend
-npm i
-npm run dev
+docker compose up --build -d
+
+# 2) Details
+
+Frontend: http://localhost:3000
+
+Backend: http://localhost:8080 (e.g., /api/activities)

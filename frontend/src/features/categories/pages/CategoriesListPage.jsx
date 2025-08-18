@@ -19,7 +19,7 @@ export default function CategoriesListPage() {
         (async () => {
             dispatch(setLoading());
             try {
-                const { data } = await axiosClient.get("/categories");
+                const { data } = await axiosClient.get("categories");
                 dispatch(setAll(data));
             } catch (e) {
                 dispatch(setError(e.response?.data?.message || e.message));
@@ -29,7 +29,7 @@ export default function CategoriesListPage() {
 
     const deleteCategory = async (id) => {
         try {
-            await axiosClient.delete(`/categories/${id}`);
+            await axiosClient.delete(`categories/${id}`);
             dispatch(removeOne(id));
         } catch (e) {
             dispatch(setError(e.response?.data?.message || e.message));

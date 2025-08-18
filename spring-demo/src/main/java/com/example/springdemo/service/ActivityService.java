@@ -24,11 +24,6 @@ public class ActivityService {
         this.categories = categories;
     }
 
-    public List<ActivityDto> all() {
-        return repo.findAll(Sort.by(Sort.Order.desc("startAt"), Sort.Order.desc("id")))
-                .stream().map(this::toDto).toList();
-    }
-
     public ActivityDto byId(Long id) {
         return toDto(getOr404(id));
     }

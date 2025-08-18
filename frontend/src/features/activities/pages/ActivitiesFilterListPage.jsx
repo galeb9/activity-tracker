@@ -48,12 +48,16 @@ export default function ActivitiesFilterListPage() {
     }, [date, searchParams, setSearchParams]);
 
     useEffect(() => {
+        if (categories.length) return;
+
         (async () => {
             if (categories.length) return;
             try {
                 const { data } = await axiosClient.get("/categories");
                 dispatch(setCategoriesAll(data));
-            } catch {}
+            } catch (err) {
+                console.error("Failed to load categories:", err);
+            }
         })();
     }, [categories.length, dispatch]);
 
@@ -166,6 +170,7 @@ export default function ActivitiesFilterListPage() {
                         onChange={(d) => d && setDate(d.startOf("day"))}
                         slotProps={{ textField: { size: "small" } }}
                     />
+
                     <IconButton onClick={goNextDay} aria-label="Next day" disabled={isFuture}>
                         <ArrowForwardIosIcon fontSize="small" />
                     </IconButton>
@@ -177,16 +182,17 @@ export default function ActivitiesFilterListPage() {
                     >
                         Today
                     </Button>
-
-                    <Tooltip title={order === "asc" ? "Latest at bottom (ASC). Click to invert." : "Latest at top (DESC). Click to invert."}>
-                        <IconButton
-                            size="small"
-                            onClick={() => setParams({ order: order === "asc" ? "desc" : "asc" })}
-                            aria-label="Toggle order"
-                        >
-                            <SwapVertIcon />
-                        </IconButton>
-                    </Tooltip>
+                    {totalMinutes > 0 &&
+                        <Tooltip title={order === "asc" ? "Latest at bottom (ASC). Click to invert." : "Latest at top (DESC). Click to invert."}>
+                            <IconButton
+                                size="small"
+                                onClick={() => setParams({ order: order === "asc" ? "desc" : "asc" })}
+                                aria-label="Toggle order"
+                            >
+                                <SwapVertIcon />
+                            </IconButton>
+                        </Tooltip>
+                    }
                 </Stack>
                 <Button
                     variant="contained"
@@ -198,24 +204,28 @@ export default function ActivitiesFilterListPage() {
                     New
                 </Button>
             </Stack>
+            {totalMinutes > 0 && (
+                <Box>
+                    <ActivitiesFilters
+                        value={{
+                            q: searchParams.get("q") || "",
+                            categoryId: searchParams.get("categoryId") || "",
+                            min: searchParams.get("min") || "",
+                            max: searchParams.get("max") || "",
+                        }}
+                        categories={categories}
+                        onChange={setParams}
+                        onClear={() => setParams({ q: "", categoryId: "", min: "", max: "" })}
+                    />
 
-            <ActivitiesFilters
-                value={{
-                    q: searchParams.get("q") || "",
-                    categoryId: searchParams.get("categoryId") || "",
-                    min: searchParams.get("min") || "",
-                    max: searchParams.get("max") || "",
-                }}
-                categories={categories}
-                onChange={setParams}
-                onClear={() => setParams({ q: "", categoryId: "", min: "", max: "" })}
-            />
+                    {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
-            {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
-
-            <Box mb={2}>
-                <Chip label={`Total: ${totalMinutes} min`} />
-            </Box>
+                    <Box mb={2}>
+                        <Chip label={`Total: ${totalMinutes} min`} />
+                    </Box>
+                </Box>
+                )
+            }
 
             {loading ? (
                 <Box p={3} display="flex" justifyContent="center">

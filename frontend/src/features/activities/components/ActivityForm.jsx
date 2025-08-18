@@ -11,6 +11,8 @@ import SaveIcon from "@mui/icons-material/Save";
 import AddIcon from "@mui/icons-material/Add";
 import dayjs from "dayjs";
 import axiosClient from "../../../api/axiosClient";
+import {Link as RouterLink} from "react-router-dom";
+import ClearIcon from '@mui/icons-material/Clear';
 
 const ActivitySchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters").max(100),
@@ -28,12 +30,12 @@ const ActivitySchema = z.object({
 });
 
 export default function ActivityForm({
-                                         mode,
-                                         initialValues,
-                                         onSubmit,
-                                         submitting = false,
-                                         error = null,
-                                     }) {
+     mode,
+     initialValues,
+     onSubmit,
+     submitting = false,
+     error = null,
+ }) {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
@@ -185,15 +187,19 @@ export default function ActivityForm({
                         </TextField>
                     )}
                 />
-
-                <Button
-                    type="submit"
-                    variant="contained"
-                    startIcon={mode === "edit" ? <SaveIcon/> : <AddIcon/>}
-                    disabled={submitting}
-                >
-                    {submitting ? "Saving..." : mode === "edit" ? "Save Changes" : "Create"}
-                </Button>
+                <Stack direction={{ xs: "column", md: "row" }} alignItems="center" justifyContent="space-between" gap={2}>
+                    <Button className="ml-auto" component={RouterLink} to="/activities" variant="outlined" startIcon={<ClearIcon />}>
+                        Cancel
+                    </Button>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        startIcon={mode === "edit" ? <SaveIcon/> : <AddIcon/>}
+                        disabled={submitting}
+                    >
+                        {submitting ? "Saving..." : mode === "edit" ? "Save Changes" : "Create"}
+                    </Button>
+                </Stack>
             </Stack>
         </Box>
     );

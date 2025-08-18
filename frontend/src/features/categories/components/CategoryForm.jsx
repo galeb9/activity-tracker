@@ -7,6 +7,8 @@ import {
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import AddIcon from "@mui/icons-material/Add";
+import {Link as RouterLink} from "react-router";
+import ClearIcon from "@mui/icons-material/Clear";
 
 const CategorySchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters").max(50, "Max 50 characters"),
@@ -42,6 +44,12 @@ export default function CategoryForm({
                     helperText={errors.name?.message}
                     autoFocus
                 />
+
+            </Stack>
+            <Stack direction={{ xs: "column", md: "row" }} alignItems="center" justifyContent="space-between" gap={2} mt={2}>
+                <Button className="ml-auto" component={RouterLink} to="/categories" variant="outlined" startIcon={<ClearIcon />}>
+                    Cancel
+                </Button>
 
                 <Button
                     type="submit"
