@@ -71,6 +71,7 @@ public class ActivityService {
                 pageable == null ? 20 : pageable.getPageSize(),
                 Sort.by(Sort.Order.desc("startAt"), Sort.Order.desc("id")))
                 : pageable;
+
         return repo.findAll(spec, p).map(this::toDto);
     }
 
